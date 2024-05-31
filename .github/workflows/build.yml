@@ -7,4 +7,3 @@ jobs:
         run: echo Hello, world!
       - run: node --version
       - run: npm --version
-      - run: go version
