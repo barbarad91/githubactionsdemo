@@ -2,10 +2,9 @@ on: push
 jobs: 
   build-node:
     runs-on: ubuntu-latest
-    container: golang:bookworm
+    container: node:22
     steps:
       - name: Run a one-line script
         run: echo Hello, world!
       - run: node --version
       - run: npm --version
-      - run: go version
