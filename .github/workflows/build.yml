@@ -1,51 +1,22 @@
-name: Share data between jobs
-
-on: [push]
-
+on: push
 jobs:
-  job_1:
-    name: Add 3 and 7
+  example_matrix:
+    strategy:
+      matrix:
+        version: [14.x, 16.x]
+        os:
+          - ubuntu-latest
+          - macos-latest
     runs-on: ubuntu-latest
     steps:
-      - shell: bash
-        run: |
-          expr 3 + 7 > math-homework.txt
-      - name: Upload math result for job 1
-        uses: actions/upload-artifact@v4
-        with:
-          name: homework_pre
-          path: math-homework.txt
-
-  job_2:
-    name: Multiply by 9
-    needs: job_1
-    runs-on: windows-latest
-    steps:
-      - name: Download math result for job 1
-        uses: actions/download-artifact@v4
-        with:
-          name: homework_pre
-      - shell: bash
-        run: |
-          value=`cat math-homework.txt`
-          expr $value \* 9 > math-homework.txt
-      - name: Upload math result for job 2
-        uses: actions/upload-artifact@v4
-        with:
-          name: homework_final
-          path: math-homework.txt
-
-  job_3:
-    name: Display results
-    needs: job_2
-    runs-on: macOS-latest
-    steps:
-      - name: Download math result for job 2
-        uses: actions/download-artifact@v4
-        with:
-          name: homework_final
-      - name: Print the final result
-        shell: bash
-        run: |
-          value=`cat math-homework.txt`
-          echo The result is $value
+    - uses: actions/checkout@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    - run: node --version
+    - run: npm --version
+    - name: Install dependencies
+      run: npm ci
+    - run: npm install
+    - run: node app.js
