@@ -4,7 +4,6 @@ jobs:
     runs-on: ubuntu-latest
     container: node:22
     steps:
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - run: echo Hello, world!
       - run: node --version
       - run: npm --version
