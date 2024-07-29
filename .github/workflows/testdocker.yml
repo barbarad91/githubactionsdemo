@@ -1,0 +1,12 @@
+name: Run tests
+on: push
+jobs: 
+    tests:
+        runs-on: ubuntu-latest
+        container:
+            image: docker-registry.mediasmart.io:5000/basic-9.11:latest
+            credentials: 
+                username: mediasmart
+                password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+        steps:
+            - run: echo Hello, world!
